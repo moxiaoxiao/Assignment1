@@ -25,6 +25,7 @@ public class ServerThread extends Thread{
 			isr = new InputStreamReader(is);
 			//添加缓冲
 			br = new BufferedReader(isr);
+			//用来读取的字符串
 			String info = null;
 			String buff = "";
 			//循环读取数据
