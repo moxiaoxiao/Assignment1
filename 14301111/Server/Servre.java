@@ -8,22 +8,16 @@ public class Servre{
 		try{
 			ServerSocket serverSocket = new ServerSocket(3333);
 			Socket socket = null;
-			//¼ÇÂ¼¿Í»§¶ËµÄÊıÁ¿
-			int count = 0;
-			System.out.println("·şÎñÆ÷¼´½«Æô¶¯£¬µÈ´ı¿Í»§»úÁ¬½Ó");
-			//Ñ­»·½¢Í§µÈ´ı¿Í»§¶ËÁ¬½Ó
+		
+			//å¾ªç¯ç­‰å¾…å®¢æˆ·ç«¯è¿æ¥
 			while(true){
-				//µ÷ÓÃaccept·½·¨¿ªÊ¼½¢Í§£¬µÈ´ı¿Í»§¶ËµÄÁ¬½Ó
+				//è°ƒç”¨acceptæ–¹æ³•å¼€å§‹èˆ°è‰‡ï¼Œç­‰å¾…å®¢æˆ·ç«¯çš„è¿æ¥
 				socket = serverSocket.accept();
-				//´´½¨Ò»¸öĞÂµÄÏß³Ì
+				//åˆ›å»ºä¸€ä¸ªæ–°çš„çº¿ç¨‹
 				ServerThread serverThread = new ServerThread(socket);
-				//Æô¶¯Ïß³Ì
+				//å¯åŠ¨çº¿ç¨‹
 				serverThread.start();
 				
-				count++;//Í³¼Æ¿Í»§»úµÄÊıÁ¿
-				System.out.println("¿Í»§¶ËµÄÊıÁ¿£º"+count);
-				InetAddress address = socket.getInetAddress();
-				System.out.println("µ±Ç°¿Í»§»úµÄIP £º " + address.getHostAddress());
 			}
 		}catch(IOException e){
 			e.printStackTrace();
