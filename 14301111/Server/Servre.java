@@ -11,7 +11,7 @@ public class Servre{
 		
 			//循环等待客户端连接
 			while(true){
-				//调用accept方法开始舰艇，等待客户端的连接
+				//调用accept方法开始等待客户端的连接
 				socket = serverSocket.accept();
 				//创建一个新的线程
 				ServerThread serverThread = new ServerThread(socket);
