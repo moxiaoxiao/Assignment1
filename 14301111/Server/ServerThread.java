@@ -5,51 +5,56 @@ import java.net.*;
 
 public class ServerThread extends Thread{
 	
-	//ºÍ±¾Ïß³ÌÏà¹ØµÄsocket
 	Socket socket = null;
 	public ServerThread(Socket socket){
 		this.socket = socket;
 	}
 	
-	//Ïß³ÌÖ´ĞĞµÄ²Ù×÷£¬ÏàÓ¦¿Í»§¶ËµÄÇëÇó
+	//å“åº”å®¢æˆ·ç«¯çš„è¯·æ±‚
 	public void run(){
 		InputStream is = null;
 		InputStreamReader isr = null;
 		BufferedReader br = null;
-		
 		OutputStream os = null;
 		PrintWriter pw = null;
+		
 		try{
-			//»ñÈ¡Ò»¸öÊäÈëÁ÷£¬È¥¶ÁÈ¡¿Í»§¶ËµÄĞÅÏ¢
+			//è¯»å–å®¢æˆ·ç«¯çš„ä¿¡æ¯
 			is = socket.getInputStream();
-			isr = new InputStreamReader(is);//½«×Ö½ÚÁ÷×ª»»Îª×Ö·ûÁ÷
-			br = new BufferedReader(isr);//Ìí¼Ó»º³å
+			//å°†å­—èŠ‚æµè½¬æ¢ä¸ºå­—ç¬¦æµ
+			isr = new InputStreamReader(is);
+			//æ·»åŠ ç¼“å†²
+			br = new BufferedReader(isr);
 			String info = null;
 			String buff = "";
-			//Ñ­»·¶ÁÈ¡Êı¾İ
+			//å¾ªç¯è¯»å–æ•°æ®
 			while((info = br.readLine()) != null){
 				buff += info;
-				System.out.println("ÊÕµ½¿Í»§¶Ë·¢ËÍÊı¾İ "+ info);
+				System.out.println(info);
 			}
+			
 			String back = "";
-			for (int i = buff.length()-1; i >= 0; i--) { // ×Ö·û´®ÏÂ±ê´Ó0¿ªÊ¼£¬³¤¶È-1½áÊø¡£µ¹ĞòËùÒÔ´Ó³¤¶È-1¿ªÊ¼£¬0½áÊø¡£
+			 // å­—ç¬¦ä¸²ä¸‹æ ‡ä»0å¼€å§‹ï¼Œé•¿åº¦-1ç»“æŸã€‚å€’åºæ‰€ä»¥ä»é•¿åº¦-1å¼€å§‹ï¼Œ0ç»“æŸã€‚
+			for (int i = buff.length()-1; i >= 0; i--) {
 				back += buff.charAt(i);
 			}
+			//å…³é—­è¾“å…¥æµ
+			socket.shutdownInput();
 			
-			socket.shutdownInput();//¹Ø±ÕÊäÈëÁ÷
-			
-			//»ñÈ¡Êä³öÁ÷£¬ÏìÓ¦¿Í»§¶ËµÄÇëÇó
+			//è·å–è¾“å‡ºæµï¼Œå“åº”å®¢æˆ·ç«¯çš„è¯·æ±‚
 			os = socket.getOutputStream();
-			pw = new PrintWriter(os);//°ü×°Îª´òÓ¡Á÷
+			//åŒ…è£…ä¸ºæ‰“å°æµ
+			pw = new PrintWriter(os);
+			//å°†ç¼“å­˜è¾“å‡º
 			pw.write(back);
-			pw.flush();//½«»º´æÊä³ö
+			pw.flush();
 			
 		}catch(IOException e){
 			e.printStackTrace();
 		}finally{
 			
 			try{
-				//¹Ø±Õ×ÊÔ´
+				//å…³é—­èµ„æº
 				if(pw != null)
 					pw.close();
 				if(os != null)
